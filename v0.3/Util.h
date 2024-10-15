@@ -16,6 +16,15 @@ enum selection {
 	Both
 };
 
+enum container_types {
+	Vector,
+	List
+};
+
+void update_info(stringstream& info, const enum container_types& type);
+
+void get_type(const enum container_types& type);
+
 /*	Mean of a type int vector.
 */
 double average_int(const vector<int>& nd);

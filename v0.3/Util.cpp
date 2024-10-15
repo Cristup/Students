@@ -8,6 +8,33 @@ random_device rd;	//-Random number generator
 //-Interval for random value of results
 uniform_int_distribution<int> interval(1, 10);
 
+void update_info(stringstream& info, const enum container_types& type)
+{
+	info.str("");
+	stringstream functions;
+	//-Information of commands for a user
+	functions << "\nInput functions:\n" <<
+		"'Test'    - selecting files for testing;\n" <<
+		"'Create   - creating test data files;\n" <<
+		"'Open'    - reading Students data;\n" <<
+		"'Show'    - show available '.txt' files;\n" <<
+		"'End'     - to stop application;\n" <<
+		"`Info'    - to list commands;\n" <<
+		"`Change`  - to change container type;\n" <<
+		"*integer* - number of students for manual input of data.\n" <<
+		"Program currently is using container type: ";
+	info << functions.str();
+	(type == container_types::Vector) ? info << "VECTOR.\n\n" : info << "LIST.\n\n";
+}
+
+void get_type(const enum container_types& type)
+{
+
+	(type == container_types::Vector) ?
+		cout << "Program currently is using container type: VECTOR.\n":
+		cout << "Program currently is using container type: LIST.\n";
+}
+
 double average_int(const vector<int>& nd)
 {
 	return accumulate(nd.begin(), nd.end(), 0.0) / nd.size();
