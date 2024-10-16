@@ -37,7 +37,8 @@ int main()
             print_by = print_selection();
             key = sort_selection(print_by);
             file_selection(testFiles);  //Selecting file names for testing
-            test_multiple_files(testFiles, print_by, key);  //Testing
+            test_multiple_files(testFiles, print_by, key, container_type);  //Testing
+            testFiles.clear();
             cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'.\n" << endl;
             continue;
         }

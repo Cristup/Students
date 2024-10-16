@@ -55,7 +55,7 @@ void create_multiple_files(const vector<File_info>& files);
 
 /*	Function for program testing
 */
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key);
+void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type);
 
 /*	Function to find valid keys in a string
 */

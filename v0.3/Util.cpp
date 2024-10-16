@@ -107,36 +107,55 @@ void create_multiple_files(const vector<File_info>& files)
 	cout << "All files created.\n\n";
 }
 
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key)
+void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type)
 {
 	for (auto& f : files) {
 
-		vector<Stud> container;
-		vector<Stud> under;
-		vector<Stud> over;
+		vector<Stud> container_vector;
+		vector<Stud> under_vector;
+		vector<Stud> over_vector;
+		list<Stud> container_list;
+		list<Stud> under_list;
+		list<Stud> over_list;
 
-		cout << "Testing " << f << ".\n" << endl;
+		cout << "Testing " << f;
+		(c_type == container_types::Vector) ?
+			cout << " using Vector.\n\n" :
+			cout << " using List.\n\n" ;
 
 		//Reading
 		Timer total;
 		Timer t;
-		Input_from_file(container, f);
+		(c_type == container_types::Vector) ?
+			Input_from_file(container_vector, f) :
+			Input_from_file(container_list, f);
 		cout << endl << "Reading " << f << " took:      " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 		//Sorting
 		t.reset();
-		sort_students(container, key);
+		(c_type == container_types::Vector) ?
+			sort_students(container_vector, key) :
+			sort_students(container_list, key);
 		cout << "Sorting " << f << " took:      " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 		//Spliting
 		t.reset();
-		sort_to_categories(container, under, over);
+		(c_type == container_types::Vector) ?
+			sort_to_categories(container_vector, under_vector, over_vector) :
+			sort_to_categories(container_list, under_list, over_list);
 		cout << "Categorising " << f << " took: " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 		//Output
 		t.reset();
-		output_to_file(over, "Stiprus.txt", print_by);
-		output_to_file(under, "Silpni.txt", print_by);
+		if (c_type == container_types::Vector) {
+			output_to_file(over_vector, "Stiprus.txt", print_by);
+			output_to_file(under_vector, "Silpni.txt", print_by);
+		} else 
+		{
+			output_to_file(over_list, "Stiprus.txt", print_by);
+			output_to_file(under_list, "Silpni.txt", print_by);
+		}
+		
 		cout << "Outputing " << f << " took:    " <<
 			fixed << setprecision(4) << t.elapsed() << endl;
 
@@ -145,6 +164,7 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 		system("pause");
 		cout << endl;
 	}
+	
 }
 
 void find_keys(string& line, const enum selection& print_by, size_t& n_keys, vector<string>& keys)

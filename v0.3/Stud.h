@@ -103,19 +103,22 @@ void output_to_file(const T local, const string& filename, const enum selection&
 *		Then pushes data to Students vector;
 *		And repeats until the end of the file.
 */
-void Input_from_file(vector<Stud>& local, const string& filename);
+template<typename Container>
+void Input_from_file(Container& local, const string& filename);
 
 /*
 	CONSTRUCTING FUNCTIONS
 */
 //With vector<>
-template void output_to_file<vector<Stud>>(const vector<Stud> local, const string& filename, const enum selection& print_by);
-template void sort_students<vector<Stud>>(vector<Stud>& Students, const string& key);
-template void sort_to_categories<vector<Stud>>(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+template void Input_from_file<vector<Stud>> (vector<Stud>& local, const string& filename);
+template void output_to_file<vector<Stud>> (const vector<Stud> local, const string& filename, const enum selection& print_by);
+template void sort_students<vector<Stud>> (vector<Stud>& Students, const string& key);
+template void sort_to_categories<vector<Stud>> (vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
 //With list<>
-template void output_to_file<list<Stud>>(const list<Stud> local, const string& filename, const enum selection& print_by);
-template void sort_students<list<Stud>>(list<Stud>& Students, const string& key);
-template void sort_to_categories<list<Stud>>(list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
+template void Input_from_file<list<Stud>> (list<Stud>& local, const string& filename);
+template void output_to_file<list<Stud>> (const list<Stud> local, const string& filename, const enum selection& print_by);
+template void sort_students<list<Stud>> (list<Stud>& Students, const string& key);
+template void sort_to_categories<list<Stud>> (list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
 
 /*
 	COMPARATORS

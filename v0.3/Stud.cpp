@@ -132,7 +132,8 @@ void input(Stud& local)
 	local.cat = (local.final_vid < 5) ? Stud::Under : Stud::Over;
 }
 
-void Input_from_file(vector<Stud>& local, const string& filename)
+template<typename Container>
+void Input_from_file(Container& local, const string& filename)
 {
 	Stud Temp_stud;			//Temporary value for storing single students data.
 	int n = 0,				//Number of homeworks.
@@ -145,24 +146,26 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 		surname;		//Temporary value for student surname.
 	stringstream buffer;	//Buffer holding file content
 
-	//Check file size
-	ifstream File;
-	File.open(filename, std::ios::ate);
-	std::streamsize fileSize = File.tellg();
-	File.seekg(ios::beg);
-	string firstline;
-	getline(File, firstline);
-	File.close();
-	int lineSize = firstline.size();
-	//cout << "File size: " << fileSize << " Bytes\n";
-	//cout << "Line size: " << lineSize << " Bytes\n";
+	if constexpr (is_same<Container, vector<Stud>>::value) {
+		//Check file size
+		ifstream File;
+		File.open(filename, std::ios::ate);
+		std::streamsize fileSize = File.tellg();
+		File.seekg(ios::beg);
+		string firstline;
+		getline(File, firstline);
+		File.close();
+		int lineSize = firstline.size();
+		//cout << "File size: " << fileSize << " Bytes\n";
+		//cout << "Line size: " << lineSize << " Bytes\n";
 
-	//Guess number of lines
-	int numberOfLines = fileSize / lineSize;
-	int adjust_size = (int) log10(numberOfLines) - 1;
-	numberOfLines += pow(10, adjust_size);
-	//cout << "Aprox. number of lines: " << numberOfLines << endl;
-	local.reserve(numberOfLines);
+		//Guess number of lines
+		int numberOfLines = fileSize / lineSize;
+		int adjust_size = (int)log10(numberOfLines) - 1;
+		numberOfLines += pow(10, adjust_size);
+		//cout << "Aprox. number of lines: " << numberOfLines << endl;
+		local.reserve(numberOfLines);
+	}
 
 	//Opening file
 	ifstream inFile; //-Data file
