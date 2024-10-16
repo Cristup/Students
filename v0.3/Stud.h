@@ -93,7 +93,7 @@ void input(Stud& local);
 */
 
 template<typename T>
-void output_to_file(const T local, const string& filename, const enum selection& print_by);
+void output_to_file(T& local, const string& filename, const enum selection& print_by);
 
 /*	Reading students data from a file to Stud structure
 		and checking for errors.
@@ -111,12 +111,12 @@ void Input_from_file(Container& local, const string& filename);
 */
 //With vector<>
 template void Input_from_file<vector<Stud>> (vector<Stud>& local, const string& filename);
-template void output_to_file<vector<Stud>> (const vector<Stud> local, const string& filename, const enum selection& print_by);
+template void output_to_file<vector<Stud>> (vector<Stud>& local, const string& filename, const enum selection& print_by);
 template void sort_students<vector<Stud>> (vector<Stud>& Students, const string& key);
 template void sort_to_categories<vector<Stud>> (vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
 //With list<>
 template void Input_from_file<list<Stud>> (list<Stud>& local, const string& filename);
-template void output_to_file<list<Stud>> (const list<Stud> local, const string& filename, const enum selection& print_by);
+template void output_to_file<list<Stud>> (list<Stud>& local, const string& filename, const enum selection& print_by);
 template void sort_students<list<Stud>> (list<Stud>& Students, const string& key);
 template void sort_to_categories<list<Stud>> (list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
 

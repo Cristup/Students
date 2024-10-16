@@ -148,12 +148,12 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 		//Output
 		t.reset();
 		if (c_type == container_types::Vector) {
-			output_to_file(over_vector, "Stiprus.txt", print_by);
-			output_to_file(under_vector, "Silpni.txt", print_by);
+			output_to_file(over_vector, f, print_by);
+			output_to_file(under_vector, f, print_by);
 		} else 
 		{
-			output_to_file(over_list, "Stiprus.txt", print_by);
-			output_to_file(under_list, "Silpni.txt", print_by);
+			output_to_file(over_list, f, print_by);
+			output_to_file(under_list, f, print_by);
 		}
 		
 		cout << "Outputing " << f << " took:    " <<

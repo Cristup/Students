@@ -231,13 +231,12 @@ void Input_from_file(Container& local, const string& filename)
 */
 
 template<typename T>
-void output_to_file(const T local, const string& filename, const enum selection& print_by)
+void output_to_file(T& local, const string& filename, const enum selection& print_by)
 {
 	stringstream name_front(filename.substr(0, filename.size() - 4));
 	string name_end;
 	(local.begin() -> cat == Stud::Over) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
-	name_front << name_end;
-	string fname = name_front.str();
+	string fname = name_front.str() + name_end;
 	//Opening file
 	ofstream outFile;	//-Results file
 	outFile.open(fname);	//File name
@@ -282,6 +281,7 @@ void output_to_file(const T local, const string& filename, const enum selection&
 	outFile << buffer.str();
 	//Closing file
 	outFile.close();
+	local.clear();
 }
 
 /*
