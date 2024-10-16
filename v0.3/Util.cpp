@@ -18,6 +18,7 @@ void update_info(stringstream& info, const enum container_types& type)
 		"'Create   - creating test data files;\n" <<
 		"'Open'    - reading Students data;\n" <<
 		"'Show'    - show available '.txt' files;\n" <<
+		"'Check'   - show currently used Conteiner\n" <<
 		"'End'     - to stop application;\n" <<
 		"`Info'    - to list commands;\n" <<
 		"`Change`  - to change container type;\n" <<
@@ -25,6 +26,50 @@ void update_info(stringstream& info, const enum container_types& type)
 		"Program currently is using container type: ";
 	info << functions.str();
 	(type == container_types::Vector) ? info << "VECTOR.\n\n" : info << "LIST.\n\n";
+}
+
+void update_files(vector<Directory_files>& files)
+{
+	files.clear();
+	stringstream buf;
+	Directory_files temp_info;
+	int id = 0;
+	string filename;
+	ofstream file("lists / list_of_txt.txt");
+	file.close();
+	system("dir *txt /B > lists/list_of_txt.txt");
+	ifstream inFile("lists/list_of_txt.txt");
+	buf << inFile.rdbuf();
+	inFile.close();
+	while(buf >> filename) {
+		id++;
+		temp_info.id = id;
+		temp_info.name = filename;
+		(is_data_file(filename)) ? temp_info.type = Directory_files::Data : temp_info.type = Directory_files::Results;
+		files.push_back(temp_info);
+	}
+}
+
+void table(const vector<Directory_files> files)
+{
+	cout << "\nID |File_name           |Content\n" <<
+			  "---+--------------------+--------\n";
+	for (const auto& file : files) {
+		cout << setw(3) << left << file.id << "|" <<
+			setw(20) << left << file.name << "|";
+		(file.type == Directory_files::Data) ?
+			cout << "Data\n" :
+			cout << "Results\n" ;
+	}
+	cout << endl;
+}
+
+bool is_data_file(const string& filename)
+{
+	string head;
+	ifstream file(filename);
+	getline(file, head);
+	return head.find("ND", 0) != string::npos;
 }
 
 void get_type(const enum container_types& type)
@@ -364,7 +409,7 @@ void file_selection(vector<string>& files)
 		}
 		else {
 			empty_count = 0;
-			if (input.length() > 4 && input.substr(input.length() - 4, 4) != ".txt") input += ".txt";
+			if (input.size() >= 4 && input.substr(input.length() - 4, 4) != ".txt") input += ".txt";
 			//Opening file for testing
 			ifstream file;
 			try {
@@ -372,11 +417,13 @@ void file_selection(vector<string>& files)
 				if (!file) {
 					throw runtime_error("File not found!");
 				}
+				file.close();
 				files.push_back(input);
 				continue;
 			}
 			catch (const exception& e) {
 				cerr << e.what() << endl;
+				continue;
 			}
 		}
 	}

@@ -10,6 +10,12 @@ struct File_info {
 	size_t size;
 };
 
+struct Directory_files {
+	int id;
+	string name;
+	enum types{Data, Results} type;
+};
+
 enum selection {
 	Average,
 	Median,
@@ -22,6 +28,12 @@ enum container_types {
 };
 
 void update_info(stringstream& info, const enum container_types& type);
+
+void update_files(vector<Directory_files>& files);
+
+void table(const vector<Directory_files> files);
+
+bool is_data_file(const string& filename);
 
 void get_type(const enum container_types& type);
 

@@ -18,10 +18,12 @@ int main()
     int number_of_students;             //-Number of students in case of manual input.
     selection print_by;                 //-Result values to print.
     vector<File_info> files;            //-Files data {Name, Size} to create.
+    vector<Directory_files> directory;  //-
     vector<string> testFiles;           //-File names to test.
-    stringstream info;
+    stringstream info;                  //-
     container_types container_type = container_types::Vector;
     update_info(info, container_type);
+    update_files(directory);
     cout << info.str();
 
     //Choosing function
@@ -41,11 +43,16 @@ int main()
             testFiles.clear();
             continue;
         }
+        //change container type
         else if (main_input.substr(0, 3) == "cha") {
             (container_type == container_types::Vector) ?
                 container_type = container_types::List :
                 container_type = container_types::Vector;
             update_info(info, container_type);
+            get_type(container_type);
+        }
+        //Check container type
+        else if (main_input.substr(0, 3) == "che") {
             get_type(container_type);
         }
         //Case of reading existing file
@@ -58,7 +65,7 @@ int main()
                 //input
                 cout << "\nInput name << ";
                 cin >> filename;
-                if (filename.substr(filename.length() - 4, 4) != ".txt") filename += ".txt";
+                if (filename.size() >= 4 && filename.substr(filename.length() - 4, 4) != ".txt") filename += ".txt";
                 //Opening file for testing
                 ifstream file;
                 try {
@@ -66,6 +73,7 @@ int main()
                     if (!file) {
                         throw runtime_error("File not found!");
                     }
+                    file.close();
                     break;
                 }
                 catch (const exception& e) {
@@ -109,7 +117,8 @@ int main()
         //Printing list of available .txt files
         else if (main_input.substr(0, 3) == "sho") {
             cout << "\nAvailable '.txt' files:\n";
-            system("dir *.txt /B");
+            update_files(directory);
+            table(directory);
             continue;
         }
         //Creating of test data files
