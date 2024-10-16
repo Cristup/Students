@@ -5,9 +5,12 @@
 int main()
 {
     //All variables inside main()
-    vector<Stud> Students;              //-Vector for storing students data.
-    vector<Stud> Students_Under;        //-Vector for storing students data with final result Under 5.
-    vector<Stud> Students_Over;         //-Vector for storing students data with final result 5 and Over.
+    vector<Stud> Students,              //-Vector for storing students data.
+                 Students_Under,        //-Vector for storing students data with final result Under 5.
+                 Students_Over;         //-Vector for storing students data with final result 5 and Over.
+    list<Stud>  Students_list,          //-
+                Under_list,             //-
+                Over_list;              //-
     Stud        Temp_stud;              //-Temporary value for storing student data.
     string      main_input,             //-User command.
                 key,                    //-Key for sorting functions.
@@ -40,8 +43,8 @@ int main()
         }
         else if (main_input.substr(0, 3) == "cha") {
             (container_type == container_types::Vector) ?
-                container_type == container_types::List :
-                container_type == container_types::Vector;
+                container_type = container_types::List :
+                container_type = container_types::Vector;
             update_info(info, container_type);
             get_type(container_type);
         }
@@ -55,6 +58,7 @@ int main()
                 //input
                 cout << "\nInput name << ";
                 cin >> filename;
+                if (filename.substr(filename.length() - 4, 4) != ".txt") filename += ".txt";
                 //Opening file for testing
                 ifstream file;
                 try {
@@ -68,12 +72,16 @@ int main()
                     cerr << e.what() << endl;
                 }
             }
+            printf("Reading %s\n", filename);
             Input_from_file(Students, filename);    //Reading the file
-            sort_students(Students, key);   //Sorting data by users choosen key
+            printf("Sorting %s\n", filename);
+            sort_students(Students, key);           //Sorting data by users choosen key
             sort_to_categories(Students, Students_Under, Students_Over);    //Spliting data to categories
-            output_to_file(Students_Over, "Stiprus.txt", print_by);         //Outputing to files
-            output_to_file(Students_Under, "Silpni.txt", print_by);         //Outputing to files
-            cout << "Results are in files: 'Stiprus.txt' & 'Silpni.txt'." << endl;
+            printf("Printing %s\n", filename);
+            output_to_file(Students_Over, filename, print_by);         //Outputing to files
+            output_to_file(Students_Under, filename, print_by);         //Outputing to files
+            string name_front = filename.substr(0, filename.size() - 4);
+            cout << "Results are in files: '" << name_front + "_stiprus.txt' & '" << name_front + "_silpni.txt'." << endl;
             continue;
         }
         //Ending programs work
@@ -90,7 +98,6 @@ int main()
         else if (main_input.substr(0, 3) == "sho") {
             cout << "\nAvailable '.txt' files:\n";
             system("dir *.txt /B");
-
             continue;
         }
         //Creating of test data files

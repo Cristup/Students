@@ -223,17 +223,21 @@ void Input_from_file(vector<Stud>& local, const string& filename)
 	}
 }
 
-
-
 /*
 		DATA OUTPUT FUNCTIONS
 */
 
-void output_to_file(const vector<Stud>& local, const string& filename, const enum selection& print_by)
+template<typename T>
+void output_to_file(const T local, const string& filename, const enum selection& print_by)
 {
+	stringstream name_front(filename.substr(0, filename.size() - 4));
+	string name_end;
+	(local.begin() -> cat == Stud::Over) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
+	name_front << name_end;
+	string fname = name_front.str();
 	//Opening file
 	ofstream outFile;	//-Results file
-	outFile.open(filename);	//File name
+	outFile.open(fname);	//File name
 	stringstream buffer;
 
 	switch (print_by)
@@ -281,7 +285,8 @@ void output_to_file(const vector<Stud>& local, const string& filename, const enu
 		OTHER FUNCTIONS
 */
 
-void sort_students(vector<Stud>& Students, const string& key) {
+template<typename T>
+void sort_students(T& Students, const string& key) {
 	map<string, int(*)(const Stud&, const Stud&)> comparators = {
 		{"nam_sur", nam_sur}, {"nam_ave", nam_ave}, {"nam_med", nam_med},
 		{"sur_nam", sur_nam}, {"sur_ave", sur_ave}, {"sur_med", sur_med},
@@ -289,8 +294,12 @@ void sort_students(vector<Stud>& Students, const string& key) {
 		{"med_nam", med_nam}, {"med_sur", med_sur}, {"med_ave", med_ave},
 		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
 	};
-
-	sort(Students.begin(), Students.end(), comparators[key]);
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		sort(Students.begin(), Students.end(), comparators[key]);
+	}
+	else if constexpr (is_same<T, list<Stud>>::value) {
+		Students.sort(comparators[key]);
+	}
 }
 
 void clean(Stud& local)
@@ -303,11 +312,14 @@ void clean(Stud& local)
 	local.final_vid = 0;
 }
 
-void sort_to_categories(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over)
+template<typename T>
+void sort_to_categories(T& local, T& Under, T& Over)
 {
 	size_t size = local.size();
-	Under.reserve(size / 1.5);
-	Over.reserve(size / 1.5);
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		Under.reserve(size / 1.5);
+		Over.reserve(size / 1.5);
+	}
 
 	for (auto& i : local) {
 		if (i.cat == Stud::category::Under) {

@@ -12,10 +12,13 @@
 #include <numeric>
 #include <functional>
 #include <map>
+#include <list>
+#include <type_traits>
 
 #include <chrono>
 
 using std::vector;
+using std::list;
 using std::string;
 using std::stringstream;
 using std::ifstream;
@@ -25,6 +28,7 @@ using std::map;
 
 using std::numeric_limits;
 using std::streamsize;
+using std::is_same;
 
 using std::exception;
 using std::invalid_argument;

@@ -31,8 +31,8 @@ void get_type(const enum container_types& type)
 {
 
 	(type == container_types::Vector) ?
-		cout << "Program currently is using container type: VECTOR.\n":
-		cout << "Program currently is using container type: LIST.\n";
+		cout << "Program currently is using container type: VECTOR.\n\n":
+		cout << "Program currently is using container type: LIST.\n\n";
 }
 
 double average_int(const vector<int>& nd)
