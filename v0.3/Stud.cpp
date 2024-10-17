@@ -27,17 +27,19 @@ void Automatic_input(Stud& local)
 {
 	//Generate exam result and print them to terminal
 	local.egz = Results_interval(rd_generator);
-	cout << "Generated egzam result: " << local.egz << endl;
+	cout << "\nGenerated egzam result: " << local.egz << endl;
 
 	//Generate number of homeworks
 	int amount = Amount_interval(rd_generator);
 
 	//Generate and print homework marks
 	local.nd.reserve(amount);
+	cout << "Generated home work result: {";
 	for (int i = 0; i < amount; i++) {
 		local.nd.push_back(Results_interval(rd_generator));
-		cout << "Generated home work result " << i + 1 << ": " << local.nd[i] << endl;
+		cout << local.nd[i]  << ", ";
 	}
+	cout << "}" << endl;
 }
 
 void Manual_input(Stud& local)

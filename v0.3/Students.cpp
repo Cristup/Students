@@ -167,6 +167,7 @@ int main()
                 for (int i = 0; i < number_of_students; i++) {
                     input(Temp_stud);
                     Students.push_back(Temp_stud);
+                    cout << "In-memory address of this student: " << &Students.back() << "\n\n";
                     clean(Temp_stud);
                 }
             }
@@ -174,6 +175,7 @@ int main()
                 for (int i = 0; i < number_of_students; i++) {
                     input(Temp_stud);
                     Students_list.push_back(Temp_stud);
+                    cout << "In-memory address of this student: " << &Students_list.back() << "\n\n";
                     clean(Temp_stud);
                 }
             }
