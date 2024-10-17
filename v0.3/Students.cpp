@@ -14,8 +14,10 @@ int main()
     Stud        Temp_stud;              //-Temporary value for storing student data.
     string      main_input,             //-User command.
                 key,                    //-Key for sorting functions.
-                filename;               //-Name of a file to read.
-    int number_of_students;             //-Number of students in case of manual input.
+                filename,               //-Name of a file to read.
+                file_ID_string;         //-
+    int         number_of_students,     //-Number of students in case of manual input.
+                file_ID;   
     selection print_by;                 //-Result values to print.
     vector<File_info> files;            //-Files data {Name, Size} to create.
     vector<Directory_files> directory;  //-
@@ -59,27 +61,47 @@ int main()
         else if (main_input.substr(0, 3) == "ope") {
             print_by = print_selection();
             key = sort_selection(print_by);
-            cout << "Select file from this list:\n";
-            system("dir  *.txt /B"); //Printing list for choosing .txt file
+            cout << "Select file from this by entering file ID.\n";
+            //Printing list for choosing .txt file
+            update_files(directory);
+            table(directory);
             while (true) {
                 //input
-                cout << "\nInput name << ";
-                cin >> filename;
-                if (filename.size() >= 4 && filename.substr(filename.length() - 4, 4) != ".txt") filename += ".txt";
-                //Opening file for testing
-                ifstream file;
+                cout << "\nInput ID << ";
                 try {
-                    file.open(filename);
-                    if (!file) {
-                        throw runtime_error("File not found!");
-                    }
-                    file.close();
-                    break;
+                    cin >> file_ID_string;
+                    file_ID = stoi(file_ID_string);
                 }
-                catch (const exception& e) {
-                    cerr << e.what() << endl;
+                catch (exception& e) {
+                    cerr << "Invalid ID! Try again.\n";
+                    continue;
+                }
+                if (file_ID <= 0 || file_ID > directory.size()) {
+                    cout << "Id not found!\n";
+                    continue;
+                }
+                else if (directory.at(file_ID - 1).type == Directory_files::Results) {
+                    cout << "You must choose data file and not results!\n";
+                    continue;
+                }
+                else {
+                    //Opening file for testing
+                    ifstream file;
+                    try {
+                        file.open(directory.at(file_ID - 1).name);
+                        if (!file) {
+                            throw runtime_error("File not found!");
+                        }
+                        file.close();
+                        break;
+                    }
+                    catch (const exception& e) {
+                        cerr << e.what() << endl;
+                        continue;
+                    }
                 }
             }
+            filename = directory.at(file_ID - 1).name;
             printf("Reading %s\n", filename);
             //Reading data form a file
             (container_type == container_types::Vector) ? Input_from_file(Students, filename) : Input_from_file(Students_list, filename);
@@ -157,19 +179,23 @@ int main()
             }
             //Sorting data by users choosen key
             if (container_type == container_types::Vector) {
+                printf("Sorting vector.\n");
                 sort_students(Students, key);
                 //Spliting data to categories
                 sort_to_categories(Students, Students_Under, Students_Over);
                 //Outputing to files
+                printf("Printing vector.\n");
                 output_to_file(Students_Over, "Data.txt", print_by);
                 //Outputing to files
                 output_to_file(Students_Under, "Data.txt", print_by);
             }
             else {
+                printf("Sorting list.\n");
                 sort_students(Students_list, key);
                 //Spliting data to categories
                 sort_to_categories(Students_list, Under_list, Over_list);
                 //Outputing to files
+                printf("Printing list.\n");
                 output_to_file(Over_list, "Data.txt", print_by);
                 //Outputing to files
                 output_to_file(Under_list, "Data.txt", print_by);

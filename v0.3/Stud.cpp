@@ -139,11 +139,11 @@ void Input_from_file(Container& local, const string& filename)
 	int n = 0,				//Number of homeworks.
 		Line_number = 0;	//For counting lines in the file.
 	string	Temp_nd,		//Temporary value for storing homework mark.
-		Temp_egzam,		//Temporary value for storing exam result.
-		Temp_value,		//Temporary value for working with headline.
-		name,			//Temporary value for student name.
-		headline,
-		surname;		//Temporary value for student surname.
+		Temp_egzam,			//Temporary value for storing exam result.
+		Temp_value,			//Temporary value for working with headline.
+		name,				//Temporary value for student name.
+		headline,			//
+		surname;			//Temporary value for student surname.
 	stringstream buffer;	//Buffer holding file content
 
 	if constexpr (is_same<Container, vector<Stud>>::value) {
@@ -235,13 +235,15 @@ void output_to_file(T& local, const string& filename, const enum selection& prin
 {
 	stringstream name_front(filename.substr(0, filename.size() - 4));
 	string name_end;
-	(local.begin() -> cat == Stud::Over) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
+	if constexpr (is_same<T, vector<Stud>>::value)
+		(local[0].final_vid >= 5) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
+	else
+		(local.front().final_vid >= 5) ? name_end = "_stiprus.txt" : name_end = "_silpni.txt";
 	string fname = name_front.str() + name_end;
 	//Opening file
 	ofstream outFile;	//-Results file
 	outFile.open(fname);	//File name
 	stringstream buffer;
-
 	switch (print_by)
 	{
 	case Average:

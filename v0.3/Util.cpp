@@ -390,13 +390,16 @@ void create_file_selection(vector<File_info>& files)
 
 void file_selection(vector<string>& files)
 {
-	int empty_count = 0;
+	vector<Directory_files> directory;
+	int empty_count = 0,
+		file_ID;
 	string input;
-	cout << "\nSelect files from this list:\n";
-	system("dir *.txt /B");
+	cout << "\nSelect files from this list by entering file ID:\n";
+	update_files(directory);
+	table(directory);
 	cout << "Press ENTER twice to finish.\n";
 	while (true) {
-		cout << "\nInput filename << ";
+		cout << "\nInput ID << ";
 		getline(cin, input);
 		if (input.empty()) {
 			empty_count++;
@@ -409,21 +412,38 @@ void file_selection(vector<string>& files)
 		}
 		else {
 			empty_count = 0;
-			if (input.size() >= 4 && input.substr(input.length() - 4, 4) != ".txt") input += ".txt";
-			//Opening file for testing
-			ifstream file;
 			try {
-				file.open(input);
-				if (!file) {
-					throw runtime_error("File not found!");
-				}
-				file.close();
-				files.push_back(input);
+				file_ID = stoi(input);
+			}
+			catch (exception& e) {
+				cerr << "Invalid ID! Try again.\n";
 				continue;
 			}
-			catch (const exception& e) {
-				cerr << e.what() << endl;
+			if (file_ID <= 0 || file_ID > directory.size()) {
+				cout << "Id not found!\n";
 				continue;
+			}
+			else if (directory.at(file_ID - 1).type == Directory_files::Results) {
+				cout << "You must choose data file and not results!\n";
+				continue;
+			}
+			else {
+				//Opening file for testing
+				ifstream file;
+				try {
+					file.open(directory.at(file_ID - 1).name);
+					if (!file) {
+						throw runtime_error("File not found!");
+					}
+					file.close();
+					files.push_back(directory.at(file_ID - 1).name);
+					cout << "Added " << files.back() << " to the list.\n";
+					continue;
+				}
+				catch (const exception& e) {
+					cerr << e.what() << endl;
+					continue;
+				}
 			}
 		}
 	}
