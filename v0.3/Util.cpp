@@ -163,7 +163,7 @@ void create_multiple_files(const vector<File_info>& files)
 void markdown_table()
 {
 	//File generation
-	printf("FILE GENERATION\n| File | Duration |\n|:-------|-------:|\n");
+	printf("FILE GENERATION\n| Size | Duration |\n|:-------|-------:|\n");
 	for (const auto& record : test_results.fg_durations) {
 		printf("| %s | `%f` |\n", record.first.substr(0, record.first.size() - 4), record.second);
 	}
