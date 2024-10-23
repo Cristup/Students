@@ -302,6 +302,7 @@ void sort_students(T& Students, const string& key) {
 		{"nam", nam}, {"sur", sur}, {"ave", ave}, {"med", med}
 	};
 	if constexpr (is_same<T, vector<Stud>>::value) {
+		//concurrency::parallel_sort(Students.begin(), Students.end(), comparators[key]);
 		sort(Students.begin(), Students.end(), comparators[key]);
 	}
 	else if constexpr (is_same<T, list<Stud>>::value) {

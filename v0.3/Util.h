@@ -16,6 +16,22 @@ struct Directory_files {
 	enum types{Data, Results} type;
 };
 
+struct Record {
+
+	double input = 0.0;
+	double sorting = 0.0;
+	double categorising = 0.0;
+	double output = 0.0;
+	double total = 0.0;
+	int	   count = 0;
+};
+
+struct Test_data {
+	map<string, Record> vec_test;
+	map<string, Record> list_test;
+	map<string, double> fg_durations;
+};
+
 enum selection {
 	Average,
 	Median,
@@ -32,6 +48,8 @@ void update_info(stringstream& info, const enum container_types& type);
 void update_files(vector<Directory_files>& files);
 
 void table(const vector<Directory_files> files);
+
+void markdown_table();
 
 bool is_data_file(const string& filename);
 

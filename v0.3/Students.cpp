@@ -52,10 +52,17 @@ int main()
                 container_type = container_types::Vector;
             update_info(info, container_type);
             get_type(container_type);
+            continue;
+        }
+        //Print test results
+        else if (main_input.substr(0, 3) == "res") {
+            markdown_table();
+            continue;
         }
         //Check container type
         else if (main_input.substr(0, 3) == "che") {
             get_type(container_type);
+            continue;
         }
         //Case of reading existing file
         else if (main_input.substr(0, 3) == "ope") {
@@ -115,12 +122,16 @@ int main()
             printf("Printing %s\n", filename);
             //Outputing to files
             if (container_type == container_types::Vector) {
-                output_to_file(Students_Over, filename, print_by);
-                output_to_file(Students_Under, filename, print_by);
+                concurrency::parallel_invoke(
+                    [&]() {output_to_file(Students_Over, "Data.txt", print_by); },
+                    [&]() {output_to_file(Students_Under, "Data.txt", print_by); }
+                );
             }
             else {
-                output_to_file(Over_list, filename, print_by);
-                output_to_file(Under_list, filename, print_by);
+                concurrency::parallel_invoke(
+                    [&]() {output_to_file(Over_list, "Data.txt", print_by); },
+                    [&]() {output_to_file(Under_list, "Data.txt", print_by); }
+                );
             }
             string name_front = filename.substr(0, filename.size() - 4);
             cout << "Results are in files: '" << name_front + "_stiprus.txt' & '" << name_front + "_silpni.txt'." << endl;
@@ -129,7 +140,7 @@ int main()
         //Ending programs work
         else if (main_input.substr(0, 3) == "end") {
             system("pause");
-            return 1;
+            return 0;
         }
         //Printing the list of functions
         else if (main_input.substr(0, 3) == "inf") {
@@ -187,9 +198,11 @@ int main()
                 sort_to_categories(Students, Students_Under, Students_Over);
                 //Outputing to files
                 printf("Printing vector.\n");
-                output_to_file(Students_Over, "Data.txt", print_by);
                 //Outputing to files
-                output_to_file(Students_Under, "Data.txt", print_by);
+                concurrency::parallel_invoke(
+                    [&] () {output_to_file(Students_Over, "Data.txt", print_by);},
+                    [&]() {output_to_file(Students_Under, "Data.txt", print_by);}
+                );
             }
             else {
                 printf("Sorting list.\n");
@@ -198,9 +211,11 @@ int main()
                 sort_to_categories(Students_list, Under_list, Over_list);
                 //Outputing to files
                 printf("Printing list.\n");
-                output_to_file(Over_list, "Data.txt", print_by);
                 //Outputing to files
-                output_to_file(Under_list, "Data.txt", print_by);
+                concurrency::parallel_invoke(
+                    [&]() {output_to_file(Over_list, "Data.txt", print_by); },
+                    [&]() {output_to_file(Under_list, "Data.txt", print_by); }
+                );
             }
             cout << "Results are in files: 'Data_stiprus.txt' & 'Data_silpni.txt'." << endl;
             continue;
