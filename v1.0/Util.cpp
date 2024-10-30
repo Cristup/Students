@@ -305,9 +305,20 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 
 		//Spliting
 		t.reset();
-		(c_type == container_types::Vector) ?
+		/*(c_type == container_types::Vector) ?
 			sort_to_categories(container_vector, under_vector, over_vector) :
-			sort_to_categories(container_list, under_list, over_list);
+			sort_to_categories(container_list, under_list, over_list);*/
+
+		if (c_type == container_types::Vector) {
+			over_vector = container_vector;
+			t.reset();
+			sort_to_categories2(over_vector, under_vector);
+		}
+		else {
+			over_list = container_list;
+			t.reset();
+			sort_to_categories2(over_list, under_list);
+		}
 
 		time = t.elapsed();
 		(c_type == container_types::Vector) ?

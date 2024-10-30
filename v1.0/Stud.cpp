@@ -333,7 +333,7 @@ void sort_to_categories(T& local, T& Under, T& Over)
 	}
 
 	for (auto& i : local) {
-		if (i.cat == Stud::category::Under) {
+		if (i.cat == Stud::Under) {
 			Under.push_back(i);
 			clean(i);
 		}
@@ -343,6 +343,38 @@ void sort_to_categories(T& local, T& Under, T& Over)
 		}
 	}
 	local.clear();
+}
+
+template<typename T>
+void sort_to_categories2(T& firstc, T& newc)
+{
+	size_t size = firstc.size();
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		newc.reserve(size / 1.5);
+	}
+
+	for (auto it = firstc.begin(); it != firstc.end();) {
+		if (it->cat == Stud::Under) {
+			newc.emplace_back(*it);
+			it = firstc.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+template<typename T>
+int find_in_container(const T& container, const Stud& element)
+{
+	int pos = 0;
+	for (const auto& i : container) {
+		if (i.vardas == element.vardas && i.pavarde == element.pavarde) {
+			return pos;
+		}
+		pos++;
+	}
+	return -1;
 }
 
 /*
