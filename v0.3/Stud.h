@@ -67,6 +67,11 @@ void sort_students(T& Students, const string& key);
 template<typename T>
 void sort_to_categories(T& local, T& Under, T& Over);
 
+/*
+*/
+template<typename T>
+void sort_to_categories2(T& original, T& new_c);
+
 /*	Function for data input in terminal.
 *		local - type Stud argument for single student data.
 	Part 1:
@@ -91,7 +96,6 @@ void input(Stud& local);
 		Average and/or Median values based on `print_by`.
 		Printing to file named `filename`
 */
-
 template<typename T>
 void output_to_file(T& local, const string& filename, const enum selection& print_by);
 
@@ -114,11 +118,14 @@ template void Input_from_file<vector<Stud>> (vector<Stud>& local, const string& 
 template void output_to_file<vector<Stud>> (vector<Stud>& local, const string& filename, const enum selection& print_by);
 template void sort_students<vector<Stud>> (vector<Stud>& Students, const string& key);
 template void sort_to_categories<vector<Stud>> (vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
+template void sort_to_categories2<vector<Stud>> (vector<Stud>& original, vector<Stud>& new_c);
+
 //With list<>
 template void Input_from_file<list<Stud>> (list<Stud>& local, const string& filename);
 template void output_to_file<list<Stud>> (list<Stud>& local, const string& filename, const enum selection& print_by);
 template void sort_students<list<Stud>> (list<Stud>& Students, const string& key);
 template void sort_to_categories<list<Stud>> (list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
+template void sort_to_categories2<list<Stud>>(list<Stud>& original, list<Stud>& new_c);
 
 /*
 	COMPARATORS

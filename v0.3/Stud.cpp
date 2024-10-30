@@ -330,7 +330,7 @@ void sort_to_categories(T& local, T& Under, T& Over)
 	}
 
 	for (auto& i : local) {
-		if (i.cat == Stud::category::Under) {
+		if (i.cat == Stud::Under) {
 			Under.push_back(i);
 			clean(i);
 		}
@@ -340,6 +340,22 @@ void sort_to_categories(T& local, T& Under, T& Over)
 		}
 	}
 	local.clear();
+}
+
+template<typename T>
+void sort_to_categories2(T& original, T& new_c)
+{
+	size_t size = original.size();
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		new_c.reserve(size / 1.5);
+	}
+
+	for (auto& i : original) {
+		if (i.cat == Stud::Under) {
+			new_c.emplace_back(i);
+			//##ERASE i FROM original##
+		}
+	}
 }
 
 /*
