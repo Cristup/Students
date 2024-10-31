@@ -38,6 +38,10 @@ enum selection {
 	Both
 };
 
+enum strategy {
+	s1 = 1, s2 = 2, s3 = 3
+};
+
 enum container_types {
 	Vector,
 	List
@@ -85,7 +89,8 @@ void create_multiple_files(const vector<File_info>& files);
 
 /*	Function for program testing
 */
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type);
+void test_multiple_files(const vector<string>& files, const enum selection& print_by,
+	const string& key, const enum container_types& c_type, const enum strategy& strat);
 
 /*	Function to find valid keys in a string
 */
@@ -106,5 +111,7 @@ void create_file_selection(vector<File_info>& files);
 /*
 */
 void file_selection(vector<string>& files);
+
+enum strategy cycle_strat(enum strategy& strat);
 
 #endif

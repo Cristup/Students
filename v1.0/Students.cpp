@@ -24,6 +24,7 @@ int main()
     vector<string> testFiles;           //-File names to test.
     stringstream info;                  //-
     container_types container_type = container_types::Vector;
+    strategy strat = strategy::s1;
     update_info(info, container_type);
     update_files(directory);
     cout << info.str();
@@ -41,8 +42,13 @@ int main()
             print_by = print_selection();
             key = sort_selection(print_by);
             file_selection(testFiles);  //Selecting file names for testing
-            test_multiple_files(testFiles, print_by, key, container_type);  //Testing
+            test_multiple_files(testFiles, print_by, key, container_type, strat);  //Testing
             testFiles.clear();
+            continue;
+        }
+        //Strategy
+        if (main_input.substr(0, 3) == "str") {
+            strat = cycle_strat(strat);
             continue;
         }
         //change container type
@@ -62,6 +68,7 @@ int main()
         //Check container type
         else if (main_input.substr(0, 3) == "che") {
             get_type(container_type);
+            cout << "Current strategy number is " << strat << "\n\n";
             continue;
         }
         //Case of reading existing file

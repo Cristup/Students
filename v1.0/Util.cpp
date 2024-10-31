@@ -25,6 +25,7 @@ void update_info(stringstream& info, const enum container_types& type)
 		"'End'     - to stop application;\n" <<
 		"`Info'    - to list commands;\n" <<
 		"`Change`  - to change container type;\n" <<
+		"`Strategy`- change data splitting strategy;\n" <<
 		"`Results` - print results of all tests;\n" <<
 		"*integer* - number of students for manual input of data.\n" <<
 		"Program currently is using container type: ";
@@ -78,10 +79,9 @@ bool is_data_file(const string& filename)
 
 void get_type(const enum container_types& type)
 {
-
 	(type == container_types::Vector) ?
-		cout << "Program currently is using container type: VECTOR.\n\n" :
-		cout << "Program currently is using container type: LIST.\n\n";
+		cout << "Program currently is using container type: VECTOR.\n" :
+		cout << "Program currently is using container type: LIST.\n";
 }
 
 double average_int(const vector<int>& nd)
@@ -255,7 +255,8 @@ void markdown_table()
 	cout << endl;
 }
 
-void test_multiple_files(const vector<string>& files, const enum selection& print_by, const string& key, const enum container_types& c_type)
+void test_multiple_files(const vector<string>& files, const enum selection& print_by,
+	const string& key, const enum container_types& c_type, const enum strategy& strat)
 {
 	for (auto& f : files) {
 
@@ -268,13 +269,14 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 
 		cout << "Testing " << f;
 		if (c_type == container_types::Vector) {
-			cout << " using Vector.\n\n";
+			cout << " using Vector ";
 			test_results.vec_test[f].count++;
 		}
 		else {
-			cout << " using List.\n\n";
+			cout << " using List ";
 			test_results.list_test[f].count++;
 		}
+		cout << "& split strategy nr: " << strat << "\n\n";
 		//Reading
 		Timer total;
 		Timer t;
@@ -305,46 +307,47 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 
 		//Spliting
 		//##STRATEGY #1
-		/*t.reset();
-		(c_type == container_types::Vector) ?
-			sort_to_categories(container_vector, under_vector, over_vector) :
-			sort_to_categories(container_list, under_list, over_list);
-		time = t.elapsed();*/
-
-			/*| Size   | Vector	    |   List     |
-			| 100000 | `0.017287` | `0.036902` |*/
-
+		if (strat == strategy::s1) {
+			t.reset();
+			(c_type == container_types::Vector) ?
+				sort_to_categories(container_vector, under_vector, over_vector) :
+				sort_to_categories(container_list, under_list, over_list);
+			time = t.elapsed();
+		/*| Size | Vector	  |   List     |
+		| 100000 | `0.017287` | `0.036902` |*/
+		}
 		//##STRATEGY #2
-		/*if (c_type == container_types::Vector) {
-			over_vector = container_vector;
-			t.reset();
-			sort_to_categories2(over_vector, under_vector);
-		}
-		else {
-			over_list = container_list;
-			t.reset();
-			sort_to_categories2(over_list, under_list);
-		}
-		time = t.elapsed();*/
-
-		/*| Size   | Vector	     | List       |
+		else if (strat == strategy::s2) {
+			if (c_type == container_types::Vector) {
+				over_vector = container_vector;
+				t.reset();
+				sort_to_categories2(over_vector, under_vector);
+			}
+			else {
+				over_list = container_list;
+				t.reset();
+				sort_to_categories2(over_list, under_list);
+			}
+			time = t.elapsed();
+		/*| Size | Vector	   | List       |
 		| 100000 | `29.783065` | `0.009906` |*/
-
+		}
 		//##STRATEGY #3
-		if (c_type == container_types::Vector) {
-			t.reset();
-			sort_to_categories3(container_vector, over_vector, under_vector);
-			time = t.elapsed();
-		}
-		else {
-			t.reset();
-			sort_to_categories3(over_list, under_list, container_list);
-			time = t.elapsed();
-			over_list = container_list;
-		}
-
+		else if (strat == strategy::s3) {
+			if (c_type == container_types::Vector) {
+				t.reset();
+				sort_to_categories3(container_vector, over_vector, under_vector);
+				time = t.elapsed();
+			}
+			else {
+				t.reset();
+				sort_to_categories3(over_list, under_list, container_list);
+				time = t.elapsed();
+				over_list = container_list;
+			}
 		/*| Size   | Vector	    | List       |
 		| 100000 | `0.017976` | `0.009157` |*/
+		}
 		
 		(c_type == container_types::Vector) ?
 			test_results.vec_test[f].categorising += time :
@@ -623,5 +626,20 @@ void file_selection(vector<string>& files)
 				}
 			}
 		}
+	}
+}
+
+enum strategy cycle_strat(enum strategy& strat) {
+	if (strat == strategy::s1) {
+		cout << "Strategy is set to 2" << "\n\n";
+		return strategy::s2;
+	}
+	else if (strat == strategy::s2) {
+		cout << "Strategy is set to 3" << "\n\n";
+		return strategy::s3;
+	}
+	else {
+		cout << "Strategy is set to 1" << "\n\n";
+		return strategy::s1;
 	}
 }

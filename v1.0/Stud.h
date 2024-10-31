@@ -14,11 +14,11 @@
 */
 struct Stud {
 	string		vardas,		//- student name;
-		pavarde;	//- student last name;
+				pavarde;	//- student last name;
 	vector<int> nd;			//- vector for storing home work marks;
 	int			egz;		//- exam result;
 	double		final_vid,	//- final result using average value of homeworks;
-		final_med;	//- final result using median value of homeworks;
+				final_med;	//- final result using median value of homeworks;
 	enum category { Under, Over } cat;// Under if result < 5 and Over if result >= 5.
 };
 
@@ -97,7 +97,6 @@ void input(Stud& local);
 		Average and/or Median values based on `print_by`.
 		Printing to file named `filename`
 */
-
 template<typename T>
 void output_to_file(T& local, const string& filename, const enum selection& print_by);
 
