@@ -365,6 +365,35 @@ void sort_to_categories2(T& firstc, T& newc)
 }
 
 template<typename T>
+void sort_to_categories3(T& local, T& Under, T& Over)
+{
+	//VECTOR
+	if constexpr (is_same<T, vector<Stud>>::value) {
+		size_t size = local.size();
+		Under.reserve(size / 1.5);
+		Over.reserve(size / 1.5);
+		for (auto& el : local) {
+			(el.cat == Stud::Under) ?
+				Under.emplace_back(el):
+				Over.emplace_back(el);
+		}
+		local.clear();
+	}
+	//LIST
+	else {
+		for (auto it = Over.begin(); it != Over.end();) {
+			if (it->cat == Stud::Under) {
+				Under.emplace_back(*it);
+				it = Over.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+	}
+}
+
+template<typename T>
 int find_in_container(const T& container, const Stud& element)
 {
 	int pos = 0;

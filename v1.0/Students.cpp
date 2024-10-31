@@ -6,18 +6,18 @@ int main()
 {
     //All variables inside main()
     vector<Stud> Students,              //-Vector for storing students data.
-        Students_Under,        //-Vector for storing students data with final result Under 5.
-        Students_Over;         //-Vector for storing students data with final result 5 and Over.
+                Students_Under,        //-Vector for storing students data with final result Under 5.
+                Students_Over;         //-Vector for storing students data with final result 5 and Over.
     list<Stud>  Students_list,          //-
-        Under_list,             //-
-        Over_list;              //-
+                Under_list,             //-
+                Over_list;              //-
     Stud        Temp_stud;              //-Temporary value for storing student data.
     string      main_input,             //-User command.
-        key,                    //-Key for sorting functions.
-        filename,               //-Name of a file to read.
-        file_ID_string;         //-
+                key,                    //-Key for sorting functions.
+                filename,               //-Name of a file to read.
+                file_ID_string;         //-
     int         number_of_students,     //-Number of students in case of manual input.
-        file_ID;
+                file_ID;
     selection print_by;                 //-Result values to print.
     vector<File_info> files;            //-Files data {Name, Size} to create.
     vector<Directory_files> directory;  //-

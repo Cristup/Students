@@ -304,12 +304,18 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 			fixed << setprecision(4) << time << endl;
 
 		//Spliting
-		t.reset();
-		/*(c_type == container_types::Vector) ?
+		//##STRATEGY #1
+		/*t.reset();
+		(c_type == container_types::Vector) ?
 			sort_to_categories(container_vector, under_vector, over_vector) :
-			sort_to_categories(container_list, under_list, over_list);*/
+			sort_to_categories(container_list, under_list, over_list);
+		time = t.elapsed();*/
 
-		if (c_type == container_types::Vector) {
+			/*| Size   | Vector	    |   List     |
+			| 100000 | `0.017287` | `0.036902` |*/
+
+		//##STRATEGY #2
+		/*if (c_type == container_types::Vector) {
 			over_vector = container_vector;
 			t.reset();
 			sort_to_categories2(over_vector, under_vector);
@@ -319,8 +325,27 @@ void test_multiple_files(const vector<string>& files, const enum selection& prin
 			t.reset();
 			sort_to_categories2(over_list, under_list);
 		}
+		time = t.elapsed();*/
 
-		time = t.elapsed();
+		/*| Size   | Vector	     | List       |
+		| 100000 | `29.783065` | `0.009906` |*/
+
+		//##STRATEGY #3
+		if (c_type == container_types::Vector) {
+			t.reset();
+			sort_to_categories3(container_vector, over_vector, under_vector);
+			time = t.elapsed();
+		}
+		else {
+			t.reset();
+			sort_to_categories3(over_list, under_list, container_list);
+			time = t.elapsed();
+			over_list = container_list;
+		}
+
+		/*| Size   | Vector	    | List       |
+		| 100000 | `0.017976` | `0.009157` |*/
+		
 		(c_type == container_types::Vector) ?
 			test_results.vec_test[f].categorising += time :
 			test_results.list_test[f].categorising += time;

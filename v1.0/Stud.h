@@ -70,6 +70,9 @@ void sort_to_categories(T& local, T& Under, T& Over);
 template<typename T>
 void sort_to_categories2(T& firstc, T& newc);
 
+template<typename T>
+void sort_to_categories3(T& local, T& Under, T& Over);
+
 /*	Function for data input in terminal.
 *		local - type Stud argument for single student data.
 	Part 1:
@@ -121,6 +124,7 @@ template void output_to_file<vector<Stud>>(vector<Stud>& local, const string& fi
 template void sort_students<vector<Stud>>(vector<Stud>& Students, const string& key);
 template void sort_to_categories<vector<Stud>>(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
 template void sort_to_categories2<vector<Stud>>(vector<Stud>& firstc, vector<Stud>& newc);
+template void sort_to_categories3<vector<Stud>>(vector<Stud>& local, vector<Stud>& Under, vector<Stud>& Over);
 template int find_in_container<vector<Stud>>(const vector<Stud>& container, const Stud& element);
 //With list<>
 template void Input_from_file<list<Stud>>(list<Stud>& local, const string& filename);
@@ -128,6 +132,7 @@ template void output_to_file<list<Stud>>(list<Stud>& local, const string& filena
 template void sort_students<list<Stud>>(list<Stud>& Students, const string& key);
 template void sort_to_categories<list<Stud>>(list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
 template void sort_to_categories2<list<Stud>>(list<Stud>& firstc, list<Stud>& newc);
+template void sort_to_categories3<list<Stud>>(list<Stud>& local, list<Stud>& Under, list<Stud>& Over);
 template int find_in_container<list<Stud>>(const list<Stud>& container, const Stud& element);
 
 /*
