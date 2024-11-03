@@ -85,7 +85,7 @@ void generate_file(const string& filename, const int& size);
 *		files.name - file name
 *		files.size - file size
 */
-void create_multiple_files(const vector<File_info>& files);
+void create_multiple_files(vector<File_info>& files);
 
 /*	Function for program testing
 */

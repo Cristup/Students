@@ -17,6 +17,8 @@
 #include <ppl.h>
 #include <thread>
 
+#include <direct.h>
+
 #include <chrono>
 
 using std::vector;

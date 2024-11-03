@@ -147,7 +147,7 @@ void generate_file(const string& filename, const int& size)
 	file.close();
 }
 
-void create_multiple_files(const vector<File_info>& files)
+void create_multiple_files(vector<File_info>& files)
 {
 	double time;
 	for (auto& file : files) {
@@ -158,6 +158,7 @@ void create_multiple_files(const vector<File_info>& files)
 		test_results.fg_durations[file.name] = time;
 	}
 	cout << "All files created.\n\n";
+	files.clear();
 }
 
 void markdown_table()

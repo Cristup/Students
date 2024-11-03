@@ -25,6 +25,7 @@ int main()
     stringstream info;                  //-
     container_types container_type = container_types::Vector;
     strategy strat = strategy::s1;
+    _mkdir("lists");
     update_info(info, container_type);
     update_files(directory);
     cout << info.str();
@@ -206,10 +207,13 @@ int main()
                 //Outputing to files
                 printf("Printing vector.\n");
                 //Outputing to files
-                concurrency::parallel_invoke(
-                    [&]() {output_to_file(Students_Over, "Data.txt", print_by); },
-                    [&]() {output_to_file(Students_Under, "Data.txt", print_by); }
-                );
+                if (!Students_Over.empty() && !Students_Under.empty()) {
+                    concurrency::parallel_invoke(
+                        [&]() {output_to_file(Students_Over, "Data.txt", print_by); },
+                        [&]() {output_to_file(Students_Under, "Data.txt", print_by);});
+                }
+                else if(!Students_Over.empty()) output_to_file(Students_Over, "Data.txt", print_by);
+                else if(!Students_Under.empty())output_to_file(Students_Under, "Data.txt", print_by);
             }
             else {
                 printf("Sorting list.\n");
