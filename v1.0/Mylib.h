@@ -16,7 +16,6 @@
 #include <type_traits>
 #include <ppl.h>
 #include <thread>
-
 #include <direct.h>
 
 #include <chrono>

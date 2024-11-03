@@ -28,6 +28,7 @@ int main()
     _mkdir("lists");
     update_info(info, container_type);
     update_files(directory);
+    system("Color 07");
     cout << info.str();
 
     //Choosing function

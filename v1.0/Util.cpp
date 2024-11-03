@@ -33,6 +33,22 @@ void update_info(stringstream& info, const enum container_types& type)
 	(type == container_types::Vector) ? info << "VECTOR.\n\n" : info << "LIST.\n\n";
 }
 
+void progress_clock(const size_t& lines)
+{
+	const size_t parts = 20;
+	int progress = 0;
+	const int duration = lines / parts * 5;
+	for (int i = 0; i < parts; i++) {
+		cout << "Progress: " << "\033[" << 31 << "m" << progress  << "%"  << "\033[" << 97 << "m" << "\r";
+		progress += 100 / parts;
+		std::this_thread::sleep_for(std::chrono::microseconds(duration));
+	}
+	//NOTES
+	// //cout << "\033[" << 31 << "m";
+	//cout << "\033[" << 92 << "m"; //92 for bright green, 97 for bright white
+	//cout << "\033[0m";
+}
+
 void update_files(vector<Directory_files>& files)
 {
 	files.clear();
@@ -151,11 +167,14 @@ void create_multiple_files(vector<File_info>& files)
 {
 	double time;
 	for (auto& file : files) {
+		std::thread clock(progress_clock, std::ref(file.size));
 		Timer timer;
 		generate_file(file.name, file.size);
 		time = timer.elapsed();
+		cout << "Progress:" << "\033[" << 92 << "m" << " 100%" << "\033[" << 97 << "m" << endl;
 		cout << "Creating file of size " << setw(8) << file.size << " took: " << time << endl;
 		test_results.fg_durations[file.name] = time;
+		clock.join();
 	}
 	cout << "All files created.\n\n";
 	files.clear();

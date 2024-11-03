@@ -47,6 +47,8 @@ enum container_types {
 	List
 };
 
+void progress_clock(const size_t& lines);
+
 void update_info(stringstream& info, const enum container_types& type);
 
 void update_files(vector<Directory_files>& files);
