@@ -28,14 +28,14 @@ void update_info(stringstream& info, const enum container_types& type)
 		"`Strategy`- change data splitting strategy;\n" <<
 		"`Results` - print results of all tests;\n" <<
 		"*integer* - number of students for manual input of data.\n" <<
-		"Program currently is using container type: ";
+		"Program currently is using container type:";
 	info << functions.str();
 	(type == container_types::Vector) ? info << "VECTOR.\n\n" : info << "LIST.\n\n";
 }
 
 void progress_clock(const size_t& lines)
 {
-	const size_t parts = 20;
+	const size_t parts = 50;
 	int progress = 0;
 	const int duration = lines / parts * 5;
 	for (int i = 0; i < parts; i++) {
@@ -171,10 +171,10 @@ void create_multiple_files(vector<File_info>& files)
 		Timer timer;
 		generate_file(file.name, file.size);
 		time = timer.elapsed();
+		clock.join();
 		cout << "Progress:" << "\033[" << 92 << "m" << " 100%" << "\033[" << 97 << "m" << endl;
 		cout << "Creating file of size " << setw(8) << file.size << " took: " << time << endl;
 		test_results.fg_durations[file.name] = time;
-		clock.join();
 	}
 	cout << "All files created.\n\n";
 	files.clear();

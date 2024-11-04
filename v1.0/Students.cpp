@@ -29,12 +29,12 @@ int main()
     update_info(info, container_type);
     update_files(directory);
     system("Color 07");
-    cout << info.str();
+    cout << "\033[" << 33 << "m" << info.str() << "\033[" << 97 << "m";
 
     //Choosing function
     while (true) {
         //Input
-        cout << "Input function << ";
+        cout << "\033[" << 33 << "m" << "Input function << " << "\033[" << 97 << "m";
         cin >> main_input;
         //transforming to lower case for small user input mistakes
         transform(main_input.begin(), main_input.end(), main_input.begin(), ::tolower);
@@ -153,7 +153,7 @@ int main()
         }
         //Printing the list of functions
         else if (main_input.substr(0, 3) == "inf") {
-            cout << info.str();
+            cout << "\033[" << 33 << "m" << info.str() << "\033[" << 97 << "m";
             continue;
         }
         //Printing list of available .txt files

@@ -367,20 +367,46 @@ void sort_to_categories2(T& firstc, T& newc)
 template<typename T>
 void sort_to_categories3(T& local, T& Under, T& Over)
 {
-	//VECTOR
 	if constexpr (is_same<T, vector<Stud>>::value) {
 		size_t size = local.size();
 		Under.reserve(size / 1.5);
 		Over.reserve(size / 1.5);
-		for (auto& el : local) {
+
+		//VECTOR #1
+		/*for (auto& el : local) {
 			(el.cat == Stud::Under) ?
 				Under.emplace_back(el):
 				Over.emplace_back(el);
-		}
+		}*/
+		//| `0.016177` |
+		
+		//VECTOR #2
+		/*std::copy_if(local.begin(), local.end(), Under.begin(), [&](const Stud& a) {return a.cat == Stud::Under; });
+		std::copy_if(local.begin(), local.end(), Over.begin(), [&](const Stud& a) {return a.cat == Stud::Over; });*/
+		//| `0.027750` |
+		
+		//VECTOR #3
+		/*auto it = std::stable_partition(local.begin(), local.end(), [&](const auto& a) {return a.cat == Stud::Under; });
+		std::copy(local.begin(), it, Under.begin());
+		std::copy(it, local.end(), Over.begin());*/
+		//| `0.032659` |
+
+		//VECTOR #4
+		/*auto it = std::stable_partition(local.begin(), local.end(), [&](const auto& a) {return a.cat == Stud::Under; });
+		Under.assign(local.begin(), it);
+		Over.assign(it, local.end());*/
+		//| `0.024361` | 
+
+		//VECTOR #5 NO RESERVE
+		auto it = std::stable_partition(local.begin(), local.end(), [&](const auto& a) {return a.cat == Stud::Under; });
+		Under.insert(Under.begin(), local.begin(), it);
+		Over.insert(Over.begin(), it, local.end());
+		//
+
 		local.clear();
 	}
-	//LIST
 	else {
+		//LIST
 		for (auto it = Over.begin(); it != Over.end();) {
 			if (it->cat == Stud::Under) {
 				Under.emplace_back(*it);
