@@ -78,7 +78,7 @@ Here are the commands for measuring program efficiency, meant for optimizing the
 
 * `Show` - This command creates the table of available .txt files in the local directory. (**Debug** folder in version **v1.0**)
 
-* `Check` - Prints currently used container type for storing data.
+* `Check` - Prints currently used container type for storing data and strategy number for categorising students.
 
 * `End` - For closing programs work.
 
@@ -144,6 +144,14 @@ void sort_students(T& Students, const string& key) {
 ### Strategies
 
 The program implements three strategies for categorizing students into two groups by their final results.
+
+Here are the duration with data files of size `10 000` and `100 000` using diffrent strategies. Results are an average of 5 tests whith each file.
+
+DATA CATEGORISING
+| Size | Vector #1 | List #1 | Vector #2 | List #2 | Vector #3 | List #3 |
+|:-------|:------:|:-------:|:------:|:-------:|:------:|:-------:|
+| 10000 | **0.002231** | `0.002769` | **0.289413** | `0.000692` | **0.001754** | `0.000843` |
+| 100000 | **0.018695** | `0.037012` | **41.425276** | `0.008061` | **0.027830** | `0.009392` |
 
 1. Creating two new containers and copying data from the main container to those containers by checking the users' category.
 ```cpp
@@ -233,59 +241,32 @@ If everything is done right program should run immediately. To run the program a
     - **Write Speed:** Up to 450 MB/s
 
 ### Speed measurements
-Velocity was mesured using files of size `1 000`, `10 000`, `100 000`, `1 000 000` and `10 000 000`. 
-Each speed result is an average of 5 tests for both containers (**list** and **vector**). 
+Velocity was mesured using files of size `1 000`, `10 000`, `100 000`, `1 000 000` and `10 000 000`, using third strategie for categorising ,printing both final results and sorting by Average.
+Each speed result is an average of 5 tests for both containers (**list** and **vector**).
 
 ### FILE GENERATION
 | Size | Duration |
 |:-------|-------:|
-| 1000 | `0.006674` |
-| 10000 | `0.054554` |
-| 100000 | `0.512322` |
-| 1000000 | `5.086912` |
-| 10000000 | `51.815343` |
+| 1000 | `0.005834` |
+| 10000 | `0.053410` |
+| 100000 | `0.523120` |
+| 1000000 | `4.970607` |
+| 10000000 | `51.500582` |
 
-### DATA READING
-| Size | Vector | List |
-|:-------|:------:|:-------:|
-| 1000 | `0.005005` | `0.005207` |
-| 10000 | `0.046214` | `0.044371` |
-| 100000 | `0.434032` | `0.426319` |
-| 1000000 | `4.178495` | `4.207000` |
-| 10000000 | `41.845112` | `42.497632` |
+### Vector
+| Size | Reading | Sorting | Categorising | Output | Total |
+|:-------|:------:|:------:|:------------:|:------:|:------:|
+| 1000 | `0.004975` | `0.000365` | `0.000144` | `0.002364` | `0.010166` |
+| 10000 | `0.043517` | `0.001200` | `0.001762` | `0.015905` | `0.065391` |
+| 100000 | `0.429476` | `0.008845` | `0.027861` | `0.137622` | `0.605705` |
+| 1000000 | `4.133885` | `0.108026` | `0.301896` | `1.295788` | `5.840783` |
+| 10000000 | `42.031892` | `1.118212` | `4.533231` | `13.469708` | `61.154339` |
 
-### DATA SORTING
-| Size | Vector | List |
-|:-------|:------:|:-------:|
-| 1000 | `0.000207` | `0.000081` |
-| 10000 | `0.002839` | `0.001170` |
-| 100000 | `0.032434` | `0.013801` |
-| 1000000 | `0.386295` | `0.166286` |
-| 10000000 | `4.585012` | `2.141302` |
-
-### DATA CATEGORISING
-| Size | Vector | List |
-|:-------|:------:|:-------:|
-| 1000 | `0.000154` | `0.000287` |
-| 10000 | `0.001738` | `0.002600` |
-| 100000 | `0.016299` | `0.025073` |
-| 1000000 | `0.154415` | `0.291918` |
-| 10000000 | `1.543058` | `3.693453` |
-
-### DATA OUTPUT
-| Size | Vector | List |
-|:-------|:------:|:-------:|
-| 1000 | `0.002099` | `0.001803` |
-| 10000 | `0.009379` | `0.009742` |
-| 100000 | `0.084102` | `0.085847` |
-| 1000000 | `0.736030` | `0.797156` |
-| 10000000 | `7.606638` | `8.390945` |
-
-### TOTAL DURATION
-| Size | Vector | List |
-|:-------|:------:|:-------:|
-| 1000 | `0.009796` | `0.009347` |
-| 10000 | `0.061101` | `0.058796` |
-| 100000 | `0.567977` | `0.552731` |
-| 1000000 | `5.456526` | `5.463538` |
-| 10000000 | `55.581121` | `56.724722` |
+### List
+| Size   | Reading | Sorting | Categorising | Output | Total |
+|:-------|:-------:|:-------:|:------------:|:------:|:------:|
+| 1000 | `0.005205` | `0.000100` | `0.000120` | `0.002364` | `0.010360` |
+| 10000 | `0.045749` | `0.001301` | `0.001229` | `0.014730` | `0.067156` |
+| 100000 | `0.438405` | `0.029920` | `0.021619` | `0.139788` | `0.648227` |
+| 1000000 | `4.338644` | `0.593802` | `0.257161` | `1.361221` | `6.741938` |
+| 10000000 | `44.318183` | `9.359349` | `2.916692` | `14.062739` | `73.233081` |
