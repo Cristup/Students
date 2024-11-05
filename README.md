@@ -201,6 +201,17 @@ void sort_to_categories3(T& local, T& Under, T& Over)
 }
 ```
 
+## Installation
+
+Here are the steps to install and run the program:
+1. Download release **v1.0** by going to releases, then release `v1.0` and press on `Source code (zip)`.
+2. **Unzip** the file `Students-1.0.zip`.
+3. Run the `run.bat` file.
+4. Follow the instructions on the screen or read [instructions](#how-to-use-the-program) on how to use the program.
+
+If everything is done right program should run immediately. To run the program again, next time you can run the `Students_App.exe` file found in the `Debug` folder or create **shortcut** by right-clicking on file `Students_App.exe` and there you should find an option **Create shortcut**, which can be moved to any convenient location from where then you'll be able to run the program.
+
+
 ## Efficiency
 
 ### System Specifications
