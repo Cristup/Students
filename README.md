@@ -270,3 +270,50 @@ Each speed result is an average of 5 tests for both containers (**list** and **v
 | 100000 | `0.438405` | `0.029920` | `0.021619` | `0.139788` | `0.648227` |
 | 1000000 | `4.338644` | `0.593802` | `0.257161` | `1.361221` | `6.741938` |
 | 10000000 | `44.318183` | `9.359349` | `2.916692` | `14.062739` | `73.233081` |
+
+## Releases
+Here are brief descriptions of all releases, what has been added in each release, and performance changes.
+
+#
+### Pre-release
+The base for the program. In this version structure for students data was created, which was later improved and some parts changed. The program accepted only manual input with a possibility to generate random results and printed results to terminal. All data was stored only in vector.
+
+#
+### v0.1
+This version was focused on working with files and handling user mic inputs.
+
+What's new:
+1. Reading from file.
+2. Writing to file.
+3. Exception handling.
+
+#
+### v0.2
+This version was meant for optimizing and doing different speed measurements. Also, implemented some new features.
+
+What's new:
+1. File testing.
+2. Categorising.
+3. Sorting key selection.
+4. Test data generation.
+5. Commands for working with the program.
+
+#
+### v0.3
+Further optimization and new features.
+
+What's new:
+1. List.
+2. Testing improvements.
+3. Remake of working with the program.
+4. Table of files in directory.
+5. Results in Markdown format tables.
+
+#
+### v1.0
+More testing and the possibility to install programs on any OS.
+
+What's new:
+1. Categorization strategies.
+2. Progress bar for file generation.
+3. Installation with CMake.
